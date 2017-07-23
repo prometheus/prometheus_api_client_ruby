@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'faraday'
-require 'prometheus/api_client/client'
 
 module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
