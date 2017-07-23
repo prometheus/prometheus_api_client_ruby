@@ -1,8 +1,6 @@
 # Prometheus Ruby Client
 
-A suite of reading metric primitives for Ruby that are exposed
-through an API HTTP interface. Intended to be used together with a
-[Prometheus server][1].
+A Ruby library for reading Prometheus metrics API.
 
 ## Usage
 
@@ -11,8 +9,8 @@ through an API HTTP interface. Intended to be used together with a
 ```ruby
 require 'prometheus/api_client'
 
-# returns a default registry
-prometheus = Prometheus::ApiClient.api_client
+# returns a default client
+prometheus = Prometheus::ApiClient.client
 
 prometheus.get(
   "query_range",
