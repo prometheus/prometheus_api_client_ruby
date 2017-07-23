@@ -1,0 +1,19 @@
+AllCops:
+    Exclude:
+        - lib/prometheus/api_client/version.rb
+
+AlignHash:
+    EnforcedHashRocketStyle: table
+
+Style/TrailingCommaInArguments:
+    EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInLiteral:
+    EnforcedStyleForMultiline: comma
+
+Metrics/AbcSize:
+    Max: 18
+
+Metrics/BlockLength:
+    Exclude:
+        - 'spec/**/*.rb'
