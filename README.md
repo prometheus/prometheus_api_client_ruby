@@ -1,6 +1,8 @@
-# Prometheus Ruby Client
+# Prometheus API Ruby Client
 
 A Ruby library for reading Prometheus metrics API.
+
+[ With ssl and authentication proxy support, if used in a layer above the prometheus REST server ]
 
 ## Usage
 
