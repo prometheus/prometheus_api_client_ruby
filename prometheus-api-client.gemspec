@@ -5,7 +5,7 @@ require 'prometheus/api_client/version'
 Gem::Specification.new do |s|
   s.name              = 'prometheus-api-client'
   s.version           = Prometheus::ApiClient::VERSION
-  s.summary           = 'A suite of reading metric values' \
+  s.summary           = 'A suite of reading metric values ' \
                         'that are exposed through an API interface.'
   s.authors           = ['Yaacov Zamir']
   s.email             = ['kobi.zamir@gmail.com']
