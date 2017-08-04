@@ -5,7 +5,7 @@ require 'faraday'
 module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
   module ApiClient
-    DEFAULT_URI = 'http://localhost:8080/'
+    DEFAULT_URI = 'http://localhost:8080/'.freeze
 
     # Returns a default client object
     def self.client(uri = DEFAULT_URI, credentials = {}, options = {})
