@@ -2,6 +2,7 @@
 
 [![Gem Version][1]](http://badge.fury.io/rb/prometheus-api-client)
 [![Build Status][2]](http://travis-ci.org/yaacov/prometheus_api_client_ruby)
+[![Build Status][3]](https://codeclimate.com/github/yaacov/prometheus_api_client_ruby)
 [![Coverage Status][4]](https://coveralls.io/github/yaacov/prometheus_api_client_ruby?branch=master)
 
 A Ruby library for reading Prometheus metrics API.
@@ -38,5 +39,5 @@ rake
 
 [1]: https://badge.fury.io/rb/prometheus-api-client.svg
 [2]: https://secure.travis-ci.org/yaacov/prometheus_api_client_ruby.svg
-[3]: https://codeclimate.com/github/yaacov/prometheus_apiclient_ruby.svg
+[3]: https://codeclimate.com/github/yaacov/prometheus_api_client_ruby.svg
 [4]: https://coveralls.io/repos/github/yaacov/prometheus_api_client_ruby/badge.svg
