@@ -7,9 +7,11 @@
 
 A Ruby library for reading Prometheus metrics API.
 
-### Authentication proxy
+## Install
 
-If an authentication proxy ( e.g. oauth2 ) is used in a layer above the prometheus REST server, this client can use ssl and authentication headears.
+```
+gem install prometheus-api-client
+```
 
 ## Usage
 
@@ -18,7 +20,7 @@ If an authentication proxy ( e.g. oauth2 ) is used in a layer above the promethe
 ```ruby
 require 'prometheus/api_client'
 
-# returns a default client
+# return a client for host http://localhost:9090/api/v1/
 prometheus = Prometheus::ApiClient.client
 
 prometheus.get(
@@ -28,6 +30,22 @@ prometheus.get(
   :end   => "2015-07-02T20:10:30.781Z",
   :step  => "120s"
 )
+```
+
+#### Changing server hostname
+
+```ruby
+# return a client for host http://example.com:9090/api/v1/
+prometheus = Prometheus::ApiClient.client('example.com')
+```
+
+#### Authentication proxy
+
+If an authentication proxy ( e.g. oauth2 ) is used in a layer above the prometheus REST server, this client can use ssl and authentication headears.
+
+```ruby
+# return a client for host https://example.com/api/v1/
+prometheus = Prometheus::ApiClient.client('example.com', scheme: 'https', port: 443)
 ```
 
 ## Tests
