@@ -20,7 +20,7 @@ module Prometheus
         port: DEFAULT_PORT,
         path: DEFAULT_PATH,
         credentials: DEFAULT_CREDENTIALS,
-        options: DEFAULT_OPTIONS
+        options: DEFAULT_OPTIONS,
       }.merge(args)
 
       Faraday.new(
@@ -38,7 +38,7 @@ module Prometheus
         host: host,
         port: port,
         path: path,
-      )
+      ).to_s
     end
 
     def self.prometheus_proxy(options)
@@ -65,7 +65,8 @@ module Prometheus
     def self.prometheus_args(host, args = {})
       {
         url: prometheus_uri(
-          host, args[:scheme], args[:port], args[:path]).to_s,
+          host, args[:scheme], args[:port], args[:path]
+        ),
         proxy: prometheus_proxy(args[:options]),
         ssl: prometheus_verify_ssl(args[:options]),
         headers: prometheus_headers(args[:credentials]),
