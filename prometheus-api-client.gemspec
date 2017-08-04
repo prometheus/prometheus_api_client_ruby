@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors           = ['Yaacov Zamir']
   s.email             = ['kobi.zamir@gmail.com']
   s.homepage          = 'https://github.com/yaacov/prometheus_api_client_ruby'
-  s.license           = 'Apache 2.0'
+  s.license           = 'Apache-2.0'
 
   s.files             = %w(README.md) + Dir.glob('{lib/**/*}')
   s.require_paths     = ['lib']

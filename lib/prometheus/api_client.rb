@@ -6,7 +6,7 @@ module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
   module ApiClient
     # Returns a default client object
-    def self.client(uri, credentials={}, options={})
+    def self.client(uri, credentials = {}, options = {})
       @args = { url: uri.to_s, request: { open_timeout: 2, timeout: 5 } }
       @args.merge!(prometheus_args(credentials, options))
 
