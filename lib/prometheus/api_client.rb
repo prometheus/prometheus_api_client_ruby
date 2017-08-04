@@ -15,10 +15,11 @@ module Prometheus
 
     # Returns a default client object
     def self.client(
-        scheme = DEFAULT_SCHEME, host = DEFAULT_HOST, port = DEFAULT_PORT,
-        path = DEFAULT_PATH, credentials = DEFAULT_CREDENTIALS,
-        options = DEFAULT_OPTIONS
-      )
+                     scheme = DEFAULT_SCHEME, host = DEFAULT_HOST,
+                     port = DEFAULT_PORT, path = DEFAULT_PATH,
+                     credentials = DEFAULT_CREDENTIALS,
+                     options = DEFAULT_OPTIONS
+                   )
 
       Faraday.new(
         prometheus_args(scheme, host, port, path, credentials, options),
@@ -55,7 +56,7 @@ module Prometheus
       return unless credentials[:token]
 
       {
-        Authorization: 'Bearer ' + credentials[:token].to_s
+        Authorization: 'Bearer ' + credentials[:token].to_s,
       }
     end
 
@@ -65,7 +66,7 @@ module Prometheus
         proxy: prometheus_proxy(options),
         ssl: prometheus_verify_ssl(options),
         headers: prometheus_headers(credentials),
-        request: {open_timeout: 2, timeout: 5},
+        request: { open_timeout: 2, timeout: 5 },
       }
     end
   end
