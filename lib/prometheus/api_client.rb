@@ -14,19 +14,21 @@ module Prometheus
     DEFAULT_OPTIONS = {}.freeze
 
     # Returns a default client object
-    def self.client(
-                     scheme = DEFAULT_SCHEME, host = DEFAULT_HOST,
-                     port = DEFAULT_PORT, path = DEFAULT_PATH,
-                     credentials = DEFAULT_CREDENTIALS,
-                     options = DEFAULT_OPTIONS
-                   )
+    def self.client(host = DEFAULT_HOST, args = {})
+      args = {
+        scheme: DEFAULT_SCHEME,
+        port: DEFAULT_PORT,
+        path: DEFAULT_PATH,
+        credentials: DEFAULT_CREDENTIALS,
+        options: DEFAULT_OPTIONS
+      }.merge(args)
 
       Faraday.new(
-        prometheus_args(scheme, host, port, path, credentials, options),
+        prometheus_args(host, args),
       )
     end
 
-    def self.prometheus_uri(scheme, host, port, path)
+    def self.prometheus_uri(host, scheme, port, path)
       builder = {
         http: URI::HTTP,
         https: URI::HTTPS,
@@ -60,12 +62,13 @@ module Prometheus
       }
     end
 
-    def self.prometheus_args(scheme, host, port, path, credentials, options)
+    def self.prometheus_args(host, args = {})
       {
-        url: prometheus_uri(scheme, host, port, path).to_s,
-        proxy: prometheus_proxy(options),
-        ssl: prometheus_verify_ssl(options),
-        headers: prometheus_headers(credentials),
+        url: prometheus_uri(
+          host, args[:scheme], args[:port], args[:path]).to_s,
+        proxy: prometheus_proxy(args[:options]),
+        ssl: prometheus_verify_ssl(args[:options]),
+        headers: prometheus_headers(args[:credentials]),
         request: { open_timeout: 2, timeout: 5 },
       }
     end
