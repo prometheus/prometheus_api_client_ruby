@@ -37,6 +37,6 @@ rake
 ```
 
 [1]: https://badge.fury.io/rb/prometheus-api-client.svg
-[2]: https://secure.travis-ci.org/yaacov/prometheus_api_client_ruby.svg?branch=master
+[2]: https://secure.travis-ci.org/yaacov/prometheus_api_client_ruby.svg
 [3]: https://codeclimate.com/github/yaacov/prometheus_apiclient_ruby.svg
-[4]: https://coveralls.io/repos/github/yaacov/prometheus_api_client_ruby/badge.svg?branch=master
+[4]: https://coveralls.io/repos/github/yaacov/prometheus_api_client_ruby/badge.svg
