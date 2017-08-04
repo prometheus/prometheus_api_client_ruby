@@ -1,5 +1,6 @@
 # Prometheus API Ruby Client
 
+[![Build Status][3]](http://travis-ci.org/yaacov/prometheus_api_client_ruby)
 [![Code Climate][6]](https://codeclimate.com/github/yaacov/prometheus_api_client_ruby)
 
 A Ruby library for reading Prometheus metrics API.
