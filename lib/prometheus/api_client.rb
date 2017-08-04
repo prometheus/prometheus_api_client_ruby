@@ -5,8 +5,10 @@ require 'faraday'
 module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
   module ApiClient
+    DEFAULT_URI = 'http://localhost:8080/'
+
     # Returns a default client object
-    def self.client(uri, credentials = {}, options = {})
+    def self.client(uri = DEFAULT_URI, credentials = {}, options = {})
       @args = { url: uri.to_s, request: { open_timeout: 2, timeout: 5 } }
       @args.merge!(prometheus_args(credentials, options))
 
