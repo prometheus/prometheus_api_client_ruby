@@ -7,7 +7,9 @@
 
 A Ruby library for reading Prometheus metrics API.
 
-[ With ssl and authentication proxy support, if used in a layer above the prometheus REST server ]
+### Authentication proxy
+
+If an authentication proxy ( e.g. oauth2 ) is used in a layer above the prometheus REST server, this client can use ssl and authentication headears.
 
 ## Usage
 
