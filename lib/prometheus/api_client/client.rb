@@ -33,9 +33,9 @@ module Prometheus
       def run_command(command, options)
         response = get(command, options)
 
-        result = JSON.parse(response.body)["data"]
+        JSON.parse(response.body)['data']
       rescue
-        fail RequestError, "Bad response from server"
+        raise RequestError, 'Bad response from server'
       end
     end
   end
