@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+require 'json'
 require 'faraday'
 
 module Prometheus
@@ -7,12 +8,34 @@ module Prometheus
   module ApiClient
     # Client contains the implementation for a Prometheus compatible api_client.
     class Client
+      class RequestError < StandardError; end
+
       def initialize(args)
         @client = Faraday.new(args)
       end
 
-      def get(args)
-        @client.get(args)
+      def query(options)
+        run_command('query', options)
+      end
+
+      def query_range(options)
+        run_command('query_range', options)
+      end
+
+      def label(tag, options)
+        run_command("label/#{tag}/values", options)
+      end
+
+      def get(command, options)
+        @client.get(command, options)
+      end
+
+      def run_command(command, options)
+        response = get(command, options)
+
+        result = JSON.parse(response.body)["data"]
+      rescue
+        fail RequestError, "Bad response from server"
       end
     end
   end
