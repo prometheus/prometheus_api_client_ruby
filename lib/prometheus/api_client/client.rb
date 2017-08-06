@@ -22,7 +22,7 @@ module Prometheus
         run_command('query_range', options)
       end
 
-      def label(tag, options={})
+      def label(tag, options = {})
         run_command("label/#{tag}/values", options)
       end
 
