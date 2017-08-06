@@ -36,7 +36,7 @@ prometheus.get(
 
 ```ruby
 # return a client for host http://example.com:9090/api/v1/
-prometheus = Prometheus::ApiClient.client('example.com')
+prometheus = Prometheus::ApiClient.client('http://example.com:9090')
 ```
 
 #### Authentication proxy
@@ -44,10 +44,32 @@ prometheus = Prometheus::ApiClient.client('example.com')
 If an authentication proxy ( e.g. oauth2 ) is used in a layer above the prometheus REST server, this client can use ssl and authentication headears.
 
 ```ruby
-# return a client for host https://example.com/api/v1/
-prometheus = Prometheus::ApiClient.client('example.com', scheme: 'https', port: 443)
+# return a client for host https://example.com/api/v1/ using a Bearer token "TopSecret"
+prometheus = Prometheus::ApiClient.client('https://example.com:443', credentials: {token: 'TopSecret'})
 ```
 
+#### High level calls
+
+```ruby
+
+# send a query request to server
+prometheus.query(
+  :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+  :start => "2015-07-01T20:10:30.781Z",
+  :end   => "2015-07-02T20:10:30.781Z"
+)
+
+# send a query_range request to server
+prometheus.query_range(
+  :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+  :start => "2015-07-01T20:10:30.781Z",
+  :end   => "2015-07-02T20:10:30.781Z",
+  :step  => "120s"
+)
+
+# send a label request to server
+prometheus.label('__name__')
+```
 ## Tests
 
 Install necessary development gems with `bundle install` and run tests with
