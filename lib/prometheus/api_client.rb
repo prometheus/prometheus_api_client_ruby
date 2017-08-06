@@ -1,44 +1,29 @@
 # encoding: UTF-8
 
 require 'uri'
-require 'faraday'
+require 'openssl'
+require 'prometheus/api_client/client'
 
 module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
   module ApiClient
-    DEFAULT_HOST = 'localhost'.freeze
-    DEFAULT_SCHEME = 'http'.freeze
-    DEFAULT_PORT = 9090
-    DEFAULT_PATH = '/api/v1/'.freeze
-    DEFAULT_CREDENTIALS = {}.freeze
-    DEFAULT_OPTIONS = {}.freeze
+    DEFAULT_ENTRYPOINT = 'http://localhost:9090'.freeze
+    DEFAULT_ARGS = {
+      path: '/api/v1/',
+      credentials: {},
+      options: {
+        open_timeout: 2,
+        timeout: 5,
+      },
+    }.freeze
 
     # Returns a default client object
-    def self.client(host = DEFAULT_HOST, args = {})
-      args = {
-        scheme: DEFAULT_SCHEME,
-        port: DEFAULT_PORT,
-        path: DEFAULT_PATH,
-        credentials: DEFAULT_CREDENTIALS,
-        options: DEFAULT_OPTIONS,
-      }.merge(args)
+    def self.client(entrypoint = DEFAULT_ENTRYPOINT, args = {})
+      args = DEFAULT_ARGS.merge(args)
 
-      Faraday.new(
-        prometheus_args(host, args),
+      Client.new(
+        prometheus_args(entrypoint, args),
       )
-    end
-
-    def self.prometheus_uri(host, scheme, port, path)
-      builder = {
-        http: URI::HTTP,
-        https: URI::HTTPS,
-      }[scheme.to_sym]
-
-      builder.build(
-        host: host,
-        port: port,
-        path: path,
-      ).to_s
     end
 
     def self.prometheus_proxy(options)
@@ -62,15 +47,16 @@ module Prometheus
       }
     end
 
-    def self.prometheus_args(host, args = {})
+    def self.prometheus_args(entrypoint, args = {})
       {
-        url: prometheus_uri(
-          host, args[:scheme], args[:port], args[:path]
-        ),
+        url: entrypoint + args[:path],
         proxy: prometheus_proxy(args[:options]),
         ssl: prometheus_verify_ssl(args[:options]),
         headers: prometheus_headers(args[:credentials]),
-        request: { open_timeout: 2, timeout: 5 },
+        request: {
+          open_timeout: args[:options][:open_timeout],
+          timeout: args[:options][:timeout],
+        },
       }
     end
   end
