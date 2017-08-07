@@ -23,7 +23,8 @@ module Prometheus
         def initialize(options = {})
           instance = options[:instance]
 
-          @labels = "job=\"kubernetes-cadvisor\",instance=\"#{instance}\""
+          @labels = "job=\"kubernetes-cadvisor\",instance=\"#{instance}\"," \
+            'id="/"'
           super(options)
         end
 
