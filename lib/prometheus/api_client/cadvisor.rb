@@ -20,13 +20,10 @@ module Prometheus
       #
       # A default client is created if options is omitted.
       class Node < Client
-        def initialize(**options)
+        def initialize(options = {})
           instance = options[:instance]
-          region = options[:region] || 'infra'
-          zone = options[:zone] || 'default'
 
-          @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
-            "zone=\"#{zone}\",instance=\"#{instance}\""
+          @labels = "job=\"kubernetes-cadvisor\",instance=\"#{instance}\""
           super(options)
         end
 
@@ -43,14 +40,11 @@ module Prometheus
 
       # A client with special labels for pod cadvisor metrics
       class Pod < Client
-        def initialize(**options)
+        def initialize(options = {})
           pod_name = options[:pod_name]
           namespace = options[:namespace] || 'default'
-          region = options[:region] || 'infra'
-          zone = options[:zone] || 'default'
 
-          @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
-            "zone=\"#{zone}\",namespace=\"#{namespace}\"," \
+          @labels = "job=\"kubernetes-cadvisor\",namespace=\"#{namespace}\"," \
             "pod_name=\"#{pod_name}\",container_name=\"POD\""
           super(options)
         end
@@ -68,15 +62,12 @@ module Prometheus
 
       # A client with special labels for container cadvisor metrics
       class Container < Client
-        def initialize(**options)
+        def initialize(options = {})
           container_name = args[:container_name]
           pod_name = args[:pod_name]
           namespace = args[:namespace] || 'default'
-          region = options[:region] || 'infra'
-          zone = options[:zone] || 'default'
 
-          @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
-            "zone=\"#{zone}\",namespace=\"#{namespace}\"," \
+          @labels = "job=\"kubernetes-cadvisor\",namespace=\"#{namespace}\"," \
             "pod_name=\"#{pod_name}\",container_name=\"#{container_name}\""
           super(options)
         end
