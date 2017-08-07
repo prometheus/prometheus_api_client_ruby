@@ -26,7 +26,7 @@ prometheus = Prometheus::ApiClient.client
 prometheus.get(
   "query_range",
   query: "sum(container_cpu_usage_seconds_total" \
-            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   start: "2015-07-01T20:10:30.781Z",
   end:   "2015-07-02T20:10:30.781Z",
   step:  "120s"
@@ -58,7 +58,7 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
 # send a query request to server
 prometheus.query(
   query: "sum(container_cpu_usage_seconds_total" \
-            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   time:  "2015-07-01T20:10:30.781Z",
 )
 ```
@@ -67,7 +67,7 @@ prometheus.query(
 # send a query_range request to server
 prometheus.query_range(
   query: "sum(container_cpu_usage_seconds_total" \
-            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   start: "2015-07-01T20:10:30.781Z",
   end:   "2015-07-02T20:10:30.781Z",
   step:  "120s"
