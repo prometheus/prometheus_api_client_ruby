@@ -10,6 +10,17 @@ module Prometheus
     class Client
       class RequestError < StandardError; end
 
+      # Default paramters for creating default client
+      DEFAULT_ARGS = {
+        url: 'http://localhost:9090',
+        path: '/api/v1/',
+        credentials: {},
+        options: {
+          open_timeout: 2,
+          timeout: 5,
+        },
+      }.freeze
+
       # Create a Prometheus API client:
       #
       # @param [Hash] options
@@ -22,7 +33,11 @@ module Prometheus
       #
       # A default client is created if options is omitted.
       def initialize(options)
-        @client = Faraday.new(options)
+        options = DEFAULT_ARGS.merge(options)
+
+        @client = Faraday.new(
+          faraday_options(options),
+        )
       end
 
       # Evaluates an instant query at a single point in time:
@@ -61,7 +76,7 @@ module Prometheus
       # @param [Hash] options
       #
       # No options used.
-      def targets(options)
+      def targets(options = {})
         run_command('targets', options)
       end
 
@@ -88,6 +103,57 @@ module Prometheus
         JSON.parse(response.body)['data']
       rescue
         raise RequestError, 'Bad response from server'
+      end
+
+      # Add labels to simple query variables.
+      #
+      # Example:
+      #     "cpu_usage" => "cpu_usage{labels...}"
+      #     "sum(cpu_usage)" => "sum(cpu_usage{labels...})"
+      #     "rate(cpu_usage[5m])" => "rate(cpu_usage{labels...}[5m])"
+      #
+      # Note:
+      #     Not supporting more complex queries.
+      def update_query(query, labels)
+        query.sub(/(?<r>\[.+\])?(?<f>[)])?$/, "{#{labels}}\\k<r>\\k<f>")
+      end
+
+      # Helper function to evalueate the low level proxy option
+      def faraday_proxy(options)
+        options[:http_proxy_uri] if options[:http_proxy_uri]
+      end
+
+      # Helper function to evalueate the low level ssl option
+      def faraday_verify_ssl(options)
+        return unless options[:verify_ssl]
+
+        {
+          verify: options[:verify_ssl] != OpenSSL::SSL::VERIFY_NONE,
+          cert_store: options[:ssl_cert_store],
+        }
+      end
+
+      # Helper function to evalueate the low level headers option
+      def faraday_headers(credentials)
+        return unless credentials[:token]
+
+        {
+          Authorization: 'Bearer ' + credentials[:token].to_s,
+        }
+      end
+
+      # Helper function to create the args for the low level client
+      def faraday_options(options)
+        {
+          url: options[:url] + options[:path],
+          proxy: faraday_proxy(options[:options]),
+          ssl: faraday_verify_ssl(options[:options]),
+          headers: faraday_headers(options[:credentials]),
+          request: {
+            open_timeout: options[:options][:open_timeout],
+            timeout: options[:options][:timeout],
+          },
+        }
       end
     end
   end

@@ -8,25 +8,25 @@ module Prometheus
     # Client contains the implementation for a Prometheus compatible api_client,
     # With special labels for the cadvisor job.
     module Cadvisor
-      # Add labels to simple query variables.
+      # Create a Prometheus API client:
       #
-      # Example:
-      #     "cpu_usage" => "cpu_usage{labels...}"
-      #     "sum(cpu_usage)" => "sum(cpu_usage{labels...})"
-      #     "rate(cpu_usage[5m])" => "rate(cpu_usage{labels...}[5m])"
+      # @param [Hash] options
+      # @option options [Hash] :url String base URL.
+      # @option options [Hash] :params URI query unencoded key/value pairs.
+      # @option options [Hash] :headers Unencoded HTTP header key/value pairs.
+      # @option options [Hash] :request Request options.
+      # @option options [Hash] :ssl SSL options.
+      # @option options [Hash] :proxy Proxy options.
       #
-      # Note:
-      #     Not supporting more complex queries.
-      def self.update_query(query, labels)
-        query.sub(/(?<r>\[.+\])?(?<f>[)])?$/, "{#{labels}}\\k<r>\\k<f>")
-      end
-
-      # A client with special labels for node cadvisor metrics
+      # A default client is created if options is omitted.
       class Node < Client
-        def initialize(instance, region = 'infra', zone = 'default', args = {})
+        def initialize(instance:, **options)
+          region = options[:region] || 'infra'
+          zone = options[:zone] || 'default'
+
           @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
             "zone=\"#{zone}\",instance=\"#{instance}\""
-          super(args)
+          super(options)
         end
 
         def query(options)
@@ -42,13 +42,15 @@ module Prometheus
 
       # A client with special labels for pod cadvisor metrics
       class Pod < Client
-        def initialize(pod_name, namespace = 'default', region = 'infra',
-                       zone = 'default', args = {})
+        def initialize(pod_name:, **options)
+          namespace = options[:namespace] || 'default'
+          region = options[:region] || 'infra'
+          zone = options[:zone] || 'default'
 
           @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
             "zone=\"#{zone}\",namespace=\"#{namespace}\"," \
             "pod_name=\"#{pod_name}\",container_name=\"POD\""
-          super(args)
+          super(options)
         end
 
         def query(options)
@@ -64,13 +66,15 @@ module Prometheus
 
       # A client with special labels for container cadvisor metrics
       class Container < Client
-        def initialize(container_name, pod_name, namespace = 'default',
-                       region = 'infra', args = {})
+        def initialize(container_name:, pod_name:, **options)
+          namespace = args[:namespace] || 'default'
+          region = options[:region] || 'infra'
+          zone = options[:zone] || 'default'
 
           @labels = "job=\"kubernetes-cadvisor\",region=\"#{region}\"," \
-            "namespace=\"#{namespace}\"," \
+            "zone=\"#{zone}\",namespace=\"#{namespace}\"," \
             "pod_name=\"#{pod_name}\",container_name=\"#{container_name}\""
-          super(args)
+          super(options)
         end
 
         def query(options)

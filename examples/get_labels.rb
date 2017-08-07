@@ -1,7 +1,7 @@
 require 'prometheus/api_client'
 
 # returns a client
-prometheus = Prometheus::ApiClient.client('http://example.com:8080')
+prometheus = Prometheus::ApiClient.client(url: 'http://example.com:8080')
 
 prometheus.label('job')
 

@@ -1,7 +1,7 @@
 require 'prometheus/api_client'
 
 # returns a client, with authentication proxy support
-prometheus = Prometheus::ApiClient.client('https://example.com:443',
+prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443',
                                           credentials: { token: 'TopSecret' })
 
 prometheus.query(

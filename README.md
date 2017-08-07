@@ -36,7 +36,7 @@ prometheus.get(
 
 ```ruby
 # return a client for host http://example.com:9090/api/v1/
-prometheus = Prometheus::ApiClient.client('http://example.com:9090')
+prometheus = Prometheus::ApiClient.client(url: 'http://example.com:9090')
 ```
 
 #### Authentication proxy
@@ -45,7 +45,7 @@ If an authentication proxy ( e.g. oauth2 ) is used in a layer above the promethe
 
 ```ruby
 # return a client for host https://example.com/api/v1/ using a Bearer token "TopSecret"
-prometheus = Prometheus::ApiClient.client('https://example.com:443', credentials: {token: 'TopSecret'})
+prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443', credentials: {token: 'TopSecret'})
 ```
 
 #### High level calls
@@ -55,8 +55,7 @@ prometheus = Prometheus::ApiClient.client('https://example.com:443', credentials
 # send a query request to server
 prometheus.query(
   :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  :start => "2015-07-01T20:10:30.781Z",
-  :end   => "2015-07-02T20:10:30.781Z"
+  :time => "2015-07-01T20:10:30.781Z",
 )
 
 # send a query_range request to server
@@ -70,6 +69,23 @@ prometheus.query_range(
 # send a label request to server
 prometheus.label('__name__')
 ```
+
+#### cAdvisor specialize client
+
+```ruby
+
+# create a client for cAdvisor metrics of a Node instance 'example.com'
+prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
+  instance: 'example.com',
+  url: 'http://example.com:8080',
+)
+
+# send a query request to server
+prometheus.query(
+  :query => "sum(container_cpu_usage_seconds_total)",
+  :time => "2015-07-01T20:10:30.781Z",
+)
+
 ## Tests
 
 Install necessary development gems with `bundle install` and run tests with
