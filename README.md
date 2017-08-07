@@ -5,7 +5,7 @@
 [![Build Status][3]](https://codeclimate.com/github/yaacov/prometheus_api_client_ruby)
 [![Coverage Status][4]](https://coveralls.io/github/yaacov/prometheus_api_client_ruby?branch=master)
 
-A Ruby library for reading Prometheus metrics API.
+A Ruby library for reading metrics stored on a Prometheus server.
 
 ## Install
 
@@ -61,7 +61,9 @@ prometheus.query(
             "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   :time => "2015-07-01T20:10:30.781Z",
 )
+```
 
+```ruby
 # send a query_range request to server
 prometheus.query_range(
   :query => "sum(container_cpu_usage_seconds_total" \
@@ -70,9 +72,54 @@ prometheus.query_range(
   :end   => "2015-07-02T20:10:30.781Z",
   :step  => "120s"
 )
+```
 
+Example of response to metrics request:
+```
+{"resultType"=>"matrix",
+ "result"=>
+  [{"metric"=>
+     {"__name__"=>"container_cpu_usage_seconds_total",
+      "beta_kubernetes_io_arch"=>"amd64",
+      "beta_kubernetes_io_os"=>"linux",
+      "cpu"=>"cpu00",
+      "id"=>"/",
+      "instance"=>"example.com",
+      "job"=>"kubernetes-cadvisor",
+      "kubernetes_io_hostname"=>"example.com",
+      "region"=>"infra",
+      "zone"=>"default"},
+    "values"=>[[1502086230.781, "51264.830099022"],
+               [1502086470.781, "51277.367732154"]]},
+   {"metric"=>
+     {"__name__"=>"container_cpu_usage_seconds_total",
+      "beta_kubernetes_io_arch"=>"amd64",
+      "beta_kubernetes_io_os"=>"linux",
+      "cpu"=>"cpu01",
+      "id"=>"/",
+      "instance"=>"example.com",
+      "job"=>"kubernetes-cadvisor",
+      "kubernetes_io_hostname"=>"example.com",
+      "region"=>"infra",
+      "zone"=>"default"},
+    "values"=>[[1502086230.781, "53879.644934689"],
+               [1502086470.781, "53892.665282065"]]}]}
+```
+
+```ruby
 # send a label request to server
 prometheus.label('__name__')
+```
+
+Example of response to a label request:
+```
+["kubernetes-apiservers", "kubernetes-cadvisor", "kubernetes-nodes",
+ "kubernetes-service-endpoints"]
+```
+
+```ruby
+# send a targets request to server
+prometheus.targets()
 ```
 
 #### cAdvisor specialize client
