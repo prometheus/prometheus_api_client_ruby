@@ -80,6 +80,7 @@ prometheus.label('__name__')
 ```ruby
 
 # create a client for cAdvisor metrics of a Node instance 'example.com'
+# connected to a Prometheus server listening on http://example.com:8080
 prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
   instance: 'example.com',
   url: 'http://example.com:8080',
