@@ -1,18 +1,17 @@
 require 'prometheus/api_client'
 
-# returns a client
-prometheus = Prometheus::ApiClient.client('http://example.com:8080')
+# returns a client, with authentication proxy support
+prometheus = Prometheus::ApiClient.client('https://example.com:443',
+                                          credentials: { token: 'TopSecret' })
 
-prometheus.query_range(
+prometheus.query(
   query: 'container_cpu_usage_seconds_total{id="/"}',
-  start: '2017-08-07T06:10:30.781Z',
-  end:   '2017-08-07T06:14:30.781Z',
-  step:  '120s',
+  time: '2017-08-07T06:10:30.781Z',
 )
 
 # will result in a hash containing the results data struct:
 #
-# {"resultType"=>"matrix",
+# {"resultType"=>"vector",
 # "result"=>
 #  [{"metric"=>
 #     {"__name__"=>"container_cpu_usage_seconds_total",
@@ -25,8 +24,7 @@ prometheus.query_range(
 #      "kubernetes_io_hostname"=>"example.com",
 #      "region"=>"infra",
 #      "zone"=>"default"},
-#    "values"=>[[1502086230.781, "51264.830099022"],
-#               [1502086470.781, "51277.367732154"]]},
+#    "value"=>[1502089057.125, "51412.007276689"]},
 #   {"metric"=>
 #     {"__name__"=>"container_cpu_usage_seconds_total",
 #      "beta_kubernetes_io_arch"=>"amd64",
@@ -38,5 +36,4 @@ prometheus.query_range(
 #      "kubernetes_io_hostname"=>"example.com",
 #      "region"=>"infra",
 #      "zone"=>"default"},
-#    "values"=>[[1502086230.781, "53879.644934689"],
-#               [1502086470.781, "53892.665282065"]]}]}
+#    "value"=>[1502089057.125, "54034.698666487"]}]}
