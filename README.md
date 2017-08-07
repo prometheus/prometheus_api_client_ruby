@@ -25,7 +25,8 @@ prometheus = Prometheus::ApiClient.client
 
 prometheus.get(
   "query_range",
-  :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+  :query => "sum(container_cpu_usage_seconds_total" \
+            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   :start => "2015-07-01T20:10:30.781Z",
   :end   => "2015-07-02T20:10:30.781Z",
   :step  => "120s"
@@ -41,11 +42,13 @@ prometheus = Prometheus::ApiClient.client(url: 'http://example.com:9090')
 
 #### Authentication proxy
 
-If an authentication proxy ( e.g. oauth2 ) is used in a layer above the prometheus REST server, this client can use ssl and authentication headears.
+If an authentication proxy ( e.g. oauth2 ) is used in a layer above the
+prometheus REST server, this client can use ssl and authentication headears.
 
 ```ruby
 # return a client for host https://example.com/api/v1/ using a Bearer token "TopSecret"
-prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443', credentials: {token: 'TopSecret'})
+prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443',
+                                          credentials: {token: 'TopSecret'})
 ```
 
 #### High level calls
@@ -54,13 +57,15 @@ prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443', creden
 
 # send a query request to server
 prometheus.query(
-  :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+  :query => "sum(container_cpu_usage_seconds_total" \
+            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   :time => "2015-07-01T20:10:30.781Z",
 )
 
 # send a query_range request to server
 prometheus.query_range(
-  :query => "sum(container_cpu_usage_seconds_total{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
+  :query => "sum(container_cpu_usage_seconds_total" \
+            "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
   :start => "2015-07-01T20:10:30.781Z",
   :end   => "2015-07-02T20:10:30.781Z",
   :step  => "120s"
@@ -85,6 +90,7 @@ prometheus.query(
   :query => "sum(container_cpu_usage_seconds_total)",
   :time => "2015-07-01T20:10:30.781Z",
 )
+```
 
 ## Tests
 
