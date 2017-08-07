@@ -8,17 +8,7 @@ module Prometheus
     # Client contains the implementation for a Prometheus compatible api_client,
     # With special labels for the cadvisor job.
     module Cadvisor
-      # Create a Prometheus API client:
-      #
-      # @param [Hash] options
-      # @option options [String] :url Server base URL.
-      # @option options [Hash] :params URI query unencoded key/value pairs.
-      # @option options [Hash] :headers Unencoded HTTP header key/value pairs.
-      # @option options [Hash] :request Request options.
-      # @option options [Hash] :ssl SSL options.
-      # @option options [Hash] :proxy Proxy options.
-      #
-      # A default client is created if options is omitted.
+      # A client with special labels for node cadvisor metrics
       class Node < Client
         def initialize(options = {})
           instance = options[:instance]
