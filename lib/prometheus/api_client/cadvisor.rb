@@ -20,7 +20,8 @@ module Prometheus
       #
       # A default client is created if options is omitted.
       class Node < Client
-        def initialize(instance:, **options)
+        def initialize(**options)
+          instance = options[:instance]
           region = options[:region] || 'infra'
           zone = options[:zone] || 'default'
 
@@ -42,7 +43,8 @@ module Prometheus
 
       # A client with special labels for pod cadvisor metrics
       class Pod < Client
-        def initialize(pod_name:, **options)
+        def initialize(**options)
+          pod_name = options[:pod_name]
           namespace = options[:namespace] || 'default'
           region = options[:region] || 'infra'
           zone = options[:zone] || 'default'
@@ -66,7 +68,9 @@ module Prometheus
 
       # A client with special labels for container cadvisor metrics
       class Container < Client
-        def initialize(container_name:, pod_name:, **options)
+        def initialize(**options)
+          container_name = args[:container_name]
+          pod_name = args[:pod_name]
           namespace = args[:namespace] || 'default'
           region = options[:region] || 'infra'
           zone = options[:zone] || 'default'
