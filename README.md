@@ -25,11 +25,11 @@ prometheus = Prometheus::ApiClient.client
 
 prometheus.get(
   "query_range",
-  :query => "sum(container_cpu_usage_seconds_total" \
+  query: "sum(container_cpu_usage_seconds_total" \
             "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  :start => "2015-07-01T20:10:30.781Z",
-  :end   => "2015-07-02T20:10:30.781Z",
-  :step  => "120s"
+  start: "2015-07-01T20:10:30.781Z",
+  end:   "2015-07-02T20:10:30.781Z",
+  step:  "120s"
 )
 ```
 
@@ -47,7 +47,7 @@ prometheus REST server, this client can use ssl and authentication headears.
 
 ```ruby
 # return a client for host https://example.com/api/v1/ using a Bearer token "TopSecret"
-prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443',
+prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443',
                                           credentials: {token: 'TopSecret'})
 ```
 
@@ -57,25 +57,23 @@ prometheus = Prometheus::ApiClient.client(url: 'https://example.com:443',
 
 # send a query request to server
 prometheus.query(
-  :query => "sum(container_cpu_usage_seconds_total" \
+  query: "sum(container_cpu_usage_seconds_total" \
             "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  :time => "2015-07-01T20:10:30.781Z",
+  time:  "2015-07-01T20:10:30.781Z",
 )
 ```
 
 ```ruby
 # send a query_range request to server
 prometheus.query_range(
-  :query => "sum(container_cpu_usage_seconds_total" \
+  query: "sum(container_cpu_usage_seconds_total" \
             "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  :start => "2015-07-01T20:10:30.781Z",
-  :end   => "2015-07-02T20:10:30.781Z",
-  :step  => "120s"
+  start: "2015-07-01T20:10:30.781Z",
+  end:   "2015-07-02T20:10:30.781Z",
+  step:  "120s"
 )
-```
 
-Example of response to metrics request:
-```
+# response from server:
 {"resultType"=>"matrix",
  "result"=>
   [{"metric"=>
@@ -109,10 +107,8 @@ Example of response to metrics request:
 ```ruby
 # send a label request to server
 prometheus.label('__name__')
-```
 
-Example of response to a label request:
-```
+# response from server:
 ["kubernetes-apiservers", "kubernetes-cadvisor", "kubernetes-nodes",
  "kubernetes-service-endpoints"]
 ```
@@ -135,8 +131,8 @@ prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
 
 # send a query request to server
 prometheus.query(
-  :query => "sum(container_cpu_usage_seconds_total)",
-  :time => "2015-07-01T20:10:30.781Z",
+  query: "sum(container_cpu_usage_seconds_total)",
+  time:  "2015-07-01T20:10:30.781Z",
 )
 ```
 
