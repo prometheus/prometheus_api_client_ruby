@@ -24,7 +24,7 @@ module Prometheus
       # Create a Prometheus API client:
       #
       # @param [Hash] options
-      # @option options [Hash] :url String base URL.
+      # @option options [String] :url server base URL.
       # @option options [Hash] :params URI query unencoded key/value pairs.
       # @option options [Hash] :headers Unencoded HTTP header key/value pairs.
       # @option options [Hash] :request Request options.
@@ -32,7 +32,7 @@ module Prometheus
       # @option options [Hash] :proxy Proxy options.
       #
       # A default client is created if options is omitted.
-      def initialize(options)
+      def initialize(options = {})
         options = DEFAULT_ARGS.merge(options)
 
         @client = Faraday.new(
