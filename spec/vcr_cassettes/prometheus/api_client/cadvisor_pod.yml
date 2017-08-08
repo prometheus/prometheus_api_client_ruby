@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://prometheus.example.com/api/v1/query?query=sum(container_cpu_usage_seconds_total%7Bjob=%22kubernetes-cadvisor%22,instance=%22example.com%22,id=%22/%22%7D)&time=2017-08-07T06:10:30.781Z
+    uri: https://prometheus.example.com/api/v1/query?query=sum(container_cpu_usage_seconds_total%7Bjob=%22kubernetes-cadvisor%22,namespace=%22default%22,pod_name=%22prometheus%22,container_name=%22POD%22%7D)&time=2017-08-07T06:10:30.781Z
     body:
       encoding: US-ASCII
       string: ''
@@ -46,7 +46,7 @@ http_interactions:
   recorded_at: Tue, 08 Aug 2017 11:08:31 GMT
 - request:
     method: get
-    uri: https://prometheus.example.com/api/v1/query_range?end=2017-08-07T06:14:30.781Z&query=sum(container_cpu_usage_seconds_total%7Bjob=%22kubernetes-cadvisor%22,instance=%22example.com%22,id=%22/%22%7D)&start=2017-08-07T06:10:30.781Z&step=120s
+    uri: https://prometheus.example.com/api/v1/query_range?end=2017-08-07T06:14:30.781Z&query=sum(container_cpu_usage_seconds_total%7Bjob=%22kubernetes-cadvisor%22,namespace=%22default%22,pod_name=%22prometheus%22,container_name=%22POD%22%7D)&start=2017-08-07T06:10:30.781Z&step=120s
     body:
       encoding: US-ASCII
       string: ''

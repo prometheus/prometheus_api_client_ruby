@@ -57,9 +57,9 @@ module Prometheus
       # A client with special labels for container cadvisor metrics
       class Container < CadvisorClient
         def initialize(options = {})
-          container_name = args[:container_name]
-          pod_name = args[:pod_name]
-          namespace = args[:namespace] || 'default'
+          container_name = options[:container_name]
+          pod_name = options[:pod_name]
+          namespace = options[:namespace] || 'default'
 
           @labels = "job=\"kubernetes-cadvisor\",namespace=\"#{namespace}\"," \
             "pod_name=\"#{pod_name}\",container_name=\"#{container_name}\""
