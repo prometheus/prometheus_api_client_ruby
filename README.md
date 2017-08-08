@@ -131,6 +131,20 @@ prometheus.targets()
 A cAdvisor client is a client that add object specific labels to each REST call,
 objects available are Node, Pod and Container.
 
+###### Node
+
+Add the instance label, user must declare the instance on client creation.
+
+###### Pod
+
+Add the pod_name label, user must declare the pod_name on client creation.
+
+###### Container
+
+Add the container_name and pod_name labels, user must declare container_name and pod_name on client creation.
+
+###### Example
+
 ```ruby
 
 # create a client for cAdvisor metrics of a Node instance 'example.com'
