@@ -105,19 +105,6 @@ module Prometheus
         raise RequestError, 'Bad response from server'
       end
 
-      # Add labels to simple query variables.
-      #
-      # Example:
-      #     "cpu_usage" => "cpu_usage{labels...}"
-      #     "sum(cpu_usage)" => "sum(cpu_usage{labels...})"
-      #     "rate(cpu_usage[5m])" => "rate(cpu_usage{labels...}[5m])"
-      #
-      # Note:
-      #     Not supporting more complex queries.
-      def update_query(query, labels)
-        query.sub(/(?<r>\[.+\])?(?<f>[)])?$/, "{#{labels}}\\k<r>\\k<f>")
-      end
-
       # Helper function to evalueate the low level proxy option
       def faraday_proxy(options)
         options[:http_proxy_uri] if options[:http_proxy_uri]
