@@ -24,12 +24,12 @@ require 'prometheus/api_client'
 prometheus = Prometheus::ApiClient.client
 
 prometheus.get(
-  "query_range",
-  query: "sum(container_cpu_usage_seconds_total" \
-         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  start: "2015-07-01T20:10:30.781Z",
-  end:   "2015-07-02T20:10:30.781Z",
-  step:  "120s"
+  'query_range',
+  query: 'sum(container_cpu_usage_seconds_total' \
+         '{container_name="prometheus-hgv4s",job="kubernetes-nodes"})',
+  start: '2015-07-01T20:10:30.781Z',
+  end:   '2015-07-02T20:10:30.781Z',
+  step:  '120s',
 )
 ```
 
@@ -48,7 +48,7 @@ prometheus REST server, this client can use ssl and authentication headears.
 ```ruby
 # return a client for host https://example.com/api/v1/ using a Bearer token "TopSecret"
 prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443',
-                                          credentials: {token: 'TopSecret'})
+                                          credentials: { token: 'TopSecret' })
 ```
 
 #### High level calls
@@ -57,20 +57,20 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
 
 # send a query request to server
 prometheus.query(
-  query: "sum(container_cpu_usage_seconds_total" \
-         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  time:  "2015-07-01T20:10:30.781Z",
+  query: 'sum(container_cpu_usage_seconds_total' \
+         '{container_name="prometheus-hgv4s",job="kubernetes-nodes"})',
+  time:  '2015-07-01T20:10:30.781Z',
 )
 ```
 
 ```ruby
 # send a query_range request to server
 prometheus.query_range(
-  query: "sum(container_cpu_usage_seconds_total" \
-         "{container_name=\"prometheus-hgv4s\",job=\"kubernetes-nodes\"})",
-  start: "2015-07-01T20:10:30.781Z",
-  end:   "2015-07-02T20:10:30.781Z",
-  step:  "120s"
+  query: 'sum(container_cpu_usage_seconds_total' \
+         '{container_name="prometheus-hgv4s",job="kubernetes-nodes"})',
+  start: '2015-07-01T20:10:30.781Z',
+  end:   '2015-07-02T20:10:30.781Z',
+  step:  '120s',
 )
 
 # response from server:
@@ -126,13 +126,13 @@ prometheus.targets()
 # connected to a Prometheus server listening on http://example.com:8080
 prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
   instance: 'example.com',
-  url: 'http://example.com:8080',
+  url:      'http://example.com:8080',
 )
 
 # send a query request to server
 prometheus.query(
-  query: "sum(container_cpu_usage_seconds_total)",
-  time:  "2015-07-01T20:10:30.781Z",
+  query: 'sum(container_cpu_usage_seconds_total)',
+  time:  '2015-07-01T20:10:30.781Z',
 )
 ```
 
