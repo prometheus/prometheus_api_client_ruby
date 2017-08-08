@@ -53,6 +53,8 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
 
 #### High level calls
 
+###### query
+
 ```ruby
 
 # send a query request to server
@@ -62,6 +64,8 @@ prometheus.query(
   time:  '2015-07-01T20:10:30.781Z',
 )
 ```
+
+###### query_range
 
 ```ruby
 # send a query_range request to server
@@ -104,6 +108,8 @@ prometheus.query_range(
                [1502086470.781, "53892.665282065"]]}]}
 ```
 
+###### label
+
 ```ruby
 # send a label request to server
 prometheus.label('__name__')
@@ -113,12 +119,17 @@ prometheus.label('__name__')
  "kubernetes-service-endpoints"]
 ```
 
+###### targets
+
 ```ruby
 # send a targets request to server
 prometheus.targets()
 ```
 
 #### cAdvisor specialize client
+
+A cAdvisor client is a client that add object specific labels to each REST call,
+objects available are Node, Pod and Container.
 
 ```ruby
 
