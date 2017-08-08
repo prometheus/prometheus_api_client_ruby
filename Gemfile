@@ -10,6 +10,7 @@ gem 'faraday'
 
 group :test do
   gem 'coveralls'
+  gem 'fakeweb'
   gem 'json', '< 2.0' if ruby_version?('< 2.0')
   gem 'rack', '< 2.0' if ruby_version?('< 2.2.2')
   gem 'rack-test'
@@ -19,5 +20,4 @@ group :test do
   gem 'term-ansicolor', '< 1.4' if ruby_version?('< 2.0')
   gem 'tins', '< 1.7' if ruby_version?('< 2.0')
   gem 'vcr'
-  gem 'fakeweb'
 end
