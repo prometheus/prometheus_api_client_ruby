@@ -47,8 +47,8 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
 ###### query
 
 ```ruby
-require 'prometheus/api_client'
 
+# send a low level get request to server
 prometheus.get(
   'query_range',
   query: 'sum(container_cpu_usage_seconds_total' \
