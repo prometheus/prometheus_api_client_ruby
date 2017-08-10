@@ -119,12 +119,12 @@ module Prometheus
         return options[:ssl] if options[:ssl]
 
         ssl = options[:options]
-        if ssl[:verify_ssl] || ssl[:ssl_cert_store]
-          {
-            verify: ssl[:verify_ssl] != OpenSSL::SSL::VERIFY_NONE,
-            cert_store: ssl[:ssl_cert_store],
-          }
-        end
+        return unless ssl[:verify_ssl] || ssl[:ssl_cert_store]
+
+        {
+          verify: ssl[:verify_ssl] != OpenSSL::SSL::VERIFY_NONE,
+          cert_store: ssl[:ssl_cert_store],
+        }
       end
 
       # Helper function to evalueate the low level headers option
@@ -132,11 +132,11 @@ module Prometheus
         return options[:headers] if options[:headers]
 
         headers = options[:credentials]
-        if headers[:token]
-          {
-            Authorization: 'Bearer ' + headers[:token].to_s,
-          }
-        end
+        return unless headers && headers[:token]
+
+        {
+          Authorization: 'Bearer ' + headers[:token].to_s,
+        }
       end
 
       # Helper function to evalueate the low level headers option
@@ -144,12 +144,12 @@ module Prometheus
         return options[:request] if options[:request]
 
         request = options[:options]
-        if request[:open_timeout] || request[:timeout]
-          {
-            open_timeout: request[:open_timeout],
-            timeout: request[:timeout],
-          }
-        end
+        return unless request[:open_timeout] || request[:timeout]
+
+        {
+          open_timeout: request[:open_timeout],
+          timeout: request[:timeout],
+        }
       end
 
       # Helper function to create the args for the low level client
