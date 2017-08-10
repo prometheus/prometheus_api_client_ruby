@@ -14,11 +14,10 @@ module Prometheus
     # @option options [String] :url Server base URL.
     # @option options [Hash] :credentials Authentication credentials.
     # @option options [Hash] :options Options used to define connection.
-    # @option options [Hash] :params URI query unencoded key/value pairs.
     # @option options [Hash] :headers Unencoded HTTP header key/value pairs.
     # @option options [Hash] :request Request options.
     # @option options [Hash] :ssl SSL options.
-    # @option options [Hash] :proxy Proxy options.
+    # @option options [String] :proxy Proxy url.
     #
     # A default client is created if options is omitted.
     def self.client(options = {})
