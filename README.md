@@ -22,15 +22,6 @@ require 'prometheus/api_client'
 
 # return a client for host http://localhost:9090/api/v1/
 prometheus = Prometheus::ApiClient.client
-
-prometheus.get(
-  'query_range',
-  query: 'sum(container_cpu_usage_seconds_total' \
-         '{container_name="prometheus-hgv4s",job="kubernetes-nodes"})',
-  start: '2015-07-01T20:10:30.781Z',
-  end:   '2015-07-02T20:10:30.781Z',
-  step:  '120s',
-)
 ```
 
 #### Changing server hostname
@@ -51,6 +42,31 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
                                           credentials: { token: 'TopSecret' })
 ```
 
+#### Low lavel calls
+
+###### query
+
+```ruby
+require 'prometheus/api_client'
+
+prometheus.get(
+  'query_range',
+  query: 'sum(container_cpu_usage_seconds_total' \
+         '{container_name="prometheus-hgv4s",job="kubernetes-nodes"})',
+  start: '2015-07-01T20:10:30.781Z',
+  end:   '2015-07-02T20:10:30.781Z',
+  step:  '120s',
+)
+```
+```
+# response from server is a low level response struct including
+# fields like: method, body and request_headers
+# usually users will not need to use this law level calls
+   ...
+   method=:get,
+   body="{\"status\":\"success\",
+   ...
+```
 #### High level calls
 
 ###### query
@@ -64,7 +80,10 @@ prometheus.query(
   time:  '2015-07-01T20:10:30.781Z',
 )
 ```
-
+```
+# response from server:
+{"resultType"=>"vector", "result"=>[{"metric"=>{}, "value"=>[1502350741.161, "6606.310387038"]}]}
+```
 ###### query_range
 
 ```ruby
@@ -76,7 +95,8 @@ prometheus.query_range(
   end:   '2015-07-02T20:10:30.781Z',
   step:  '120s',
 )
-
+```
+```
 # response from server:
 {"resultType"=>"matrix",
  "result"=>
@@ -113,10 +133,13 @@ prometheus.query_range(
 ```ruby
 # send a label request to server
 prometheus.label('__name__')
-
+```
+```
 # response from server:
-["kubernetes-apiservers", "kubernetes-cadvisor", "kubernetes-nodes",
- "kubernetes-service-endpoints"]
+["APIServiceRegistrationController_adds",
+ "APIServiceRegistrationController_depth",
+ ...
+
 ```
 
 ###### targets
@@ -124,6 +147,30 @@ prometheus.label('__name__')
 ```ruby
 # send a targets request to server
 prometheus.targets()
+```
+```
+# response from server:
+{"activeTargets"=>
+  [{"discoveredLabels"=>
+     {"__address__"=>"10.35.19.248:8443",
+      "__meta_kubernetes_endpoint_port_name"=>"https",
+      "__meta_kubernetes_endpoint_port_protocol"=>"TCP",
+      "__meta_kubernetes_endpoint_ready"=>"true",
+      "__meta_kubernetes_endpoints_name"=>"kubernetes",
+      "__meta_kubernetes_namespace"=>"default",
+      "__meta_kubernetes_service_label_component"=>"apiserver",
+      "__meta_kubernetes_service_label_provider"=>"kubernetes",
+      "__meta_kubernetes_service_name"=>"kubernetes",
+      "__metrics_path__"=>"/metrics",
+      "__scheme__"=>"https",
+      "job"=>"kubernetes-apiservers"},
+    "labels"=>{"instance"=>"10.35.19.248:8443", "job"=>"kubernetes-apiservers"},
+    "scrapeUrl"=>"https://10.35.19.248:8443/metrics",
+    "lastError"=>"",
+    "lastScrape"=>"2017-08-10T07:35:40.919376413Z",
+    "health"=>"up"},
+    ...
+
 ```
 
 #### cAdvisor specialize client
@@ -155,10 +202,11 @@ prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
 )
 
 # send a query request to server
-prometheus.query(
-  query: 'sum(container_cpu_usage_seconds_total)',
-  time:  '2015-07-01T20:10:30.781Z',
-)
+prometheus.query(query: 'sum(container_cpu_usage_seconds_total)')
+```
+```
+# response from server:
+{"resultType"=>"vector", "result"=>[{"metric"=>{}, "value"=>[1502350741.161, "6606.310387038"]}]}
 ```
 
 ## Tests
