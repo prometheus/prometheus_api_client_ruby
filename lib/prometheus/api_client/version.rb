@@ -2,6 +2,6 @@
 
 module Prometheus
   module ApiClient
-    VERSION = '0.3.4'
+    VERSION = '0.4.1'
   end
 end
