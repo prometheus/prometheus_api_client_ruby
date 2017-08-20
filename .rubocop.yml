@@ -14,6 +14,9 @@ Style/TrailingCommaInLiteral:
 Metrics/AbcSize:
     Max: 18
 
+Metrics/MethodLength:
+    Max: 23
+
 Metrics/BlockLength:
     Exclude:
         - 'spec/**/*.rb'
