@@ -36,8 +36,14 @@ module Prometheus
         def initialize(options = {})
           instance = options[:instance]
 
-          @labels = "job=\"kubernetes-cadvisor\",instance=\"#{instance}\"," \
-            'id="/"'
+          # if no instance is given, assume we want data on all nodes
+          @labels = if instance
+                      'job="kubernetes-cadvisor",id="/",' \
+                      "instance=\"#{instance}\""
+                    else
+                      'job="kubernetes-cadvisor",id="/"'
+                    end
+
           super(options)
         end
       end
@@ -48,8 +54,14 @@ module Prometheus
           pod_name = options[:pod_name]
           namespace = options[:namespace] || 'default'
 
-          @labels = "job=\"kubernetes-cadvisor\",namespace=\"#{namespace}\"," \
-            "pod_name=\"#{pod_name}\",container_name=\"POD\""
+          # if no pod_name is given, assume we want data on all pods
+          @labels = if pod_name
+                      'job="kubernetes-cadvisor",container_name="POD",' \
+                      "pod_name=\"#{pod_name}\",namespace=\"#{namespace}\""
+                    else
+                      'job="kubernetes-cadvisor",container_name="POD"'
+                    end
+
           super(options)
         end
       end
@@ -61,8 +73,15 @@ module Prometheus
           pod_name = options[:pod_name]
           namespace = options[:namespace] || 'default'
 
-          @labels = "job=\"kubernetes-cadvisor\",namespace=\"#{namespace}\"," \
-            "pod_name=\"#{pod_name}\",container_name=\"#{container_name}\""
+          # if no container_name is given, assume we want data on all containers
+          @labels = if container_name
+                      'job="kubernetes-cadvisor",' \
+                      "namespace=\"#{namespace}\",pod_name=\"#{pod_name}\"," \
+                      "container_name=\"#{container_name}\""
+                    else
+                      'job="kubernetes-cadvisor",container_name!="POD"'
+                    end
+
           super(options)
         end
       end
