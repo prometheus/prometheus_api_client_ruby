@@ -3,7 +3,6 @@
 require 'uri'
 require 'openssl'
 require 'prometheus/api_client/client'
-require 'prometheus/api_client/cadvisor'
 
 module Prometheus
   # Api Client is a ruby implementation for a Prometheus compatible api_client.

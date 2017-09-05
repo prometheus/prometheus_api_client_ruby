@@ -173,42 +173,6 @@ prometheus.targets()
 
 ```
 
-#### cAdvisor specialize client
-
-A cAdvisor client is a client that add object specific labels to each REST call,
-objects available are Node, Pod and Container.
-
-###### Node
-
-Add the instance label, user must declare the instance on client creation.
-
-###### Pod
-
-Add the pod_name label, user must declare the pod_name on client creation.
-
-###### Container
-
-Add the container_name and pod_name labels, user must declare container_name and pod_name on client creation.
-
-###### Example
-
-```ruby
-
-# create a client for cAdvisor metrics of a Node instance 'example.com'
-# connected to a Prometheus server listening on http://example.com:8080
-prometheus = Prometheus::ApiClient::Cadvisor::Node.new(
-  instance: 'example.com',
-  url:      'http://example.com:8080',
-)
-
-# send a query request to server
-prometheus.query(query: 'sum(container_cpu_usage_seconds_total)')
-```
-```
-# response from server:
-{"resultType"=>"vector", "result"=>[{"metric"=>{}, "value"=>[1502350741.161, "6606.310387038"]}]}
-```
-
 ## Tests
 
 Install necessary development gems with `bundle install` and run tests with
