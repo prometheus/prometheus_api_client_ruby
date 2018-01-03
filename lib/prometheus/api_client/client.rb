@@ -102,8 +102,8 @@ module Prometheus
         response = get(command, options)
 
         JSON.parse(response.body)['data']
-      rescue
-        raise RequestError, 'Bad response from server'
+      rescue StandardError => err
+        raise RequestError, err.message
       end
 
       # Helper function to evalueate the low level proxy option
