@@ -42,7 +42,7 @@ prometheus = Prometheus::ApiClient.client(url:         'https://example.com:443'
                                           credentials: { token: 'TopSecret' })
 ```
 
-#### Low lavel calls
+#### Low level calls
 
 ###### query
 
