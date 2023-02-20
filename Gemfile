@@ -2,10 +2,6 @@ source 'https://rubygems.org'
 
 gemspec
 
-def ruby_version?(constraint)
-  Gem::Dependency.new('', constraint).match?('', RUBY_VERSION)
-end
-
 gem 'faraday'
 
 group :test do
