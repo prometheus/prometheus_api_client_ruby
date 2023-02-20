@@ -2,6 +2,7 @@
 
 require 'json'
 require 'faraday'
+require 'faraday/net_http'
 
 module Prometheus
   # Client is a ruby implementation for a Prometheus compatible api_client.
@@ -38,7 +39,9 @@ module Prometheus
 
         @client = Faraday.new(
           faraday_options(options),
-        )
+        ) do |f|
+          f.adapter :net_http
+        end
       end
 
       # Evaluates an instant query at a single point in time:
