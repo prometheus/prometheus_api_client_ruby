@@ -1,14 +1,22 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
+    TargetRubyVersion: 3.0
     Exclude:
         - lib/prometheus/api_client/version.rb
+    NewCops: disable
+    SuggestExtensions: false
 
-AlignHash:
+Layout/HashAlignment:
     EnforcedHashRocketStyle: table
 
 Style/TrailingCommaInArguments:
     EnforcedStyleForMultiline: comma
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
+    EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
     EnforcedStyleForMultiline: comma
 
 Metrics/AbcSize:
@@ -21,6 +29,6 @@ Metrics/BlockLength:
     Exclude:
         - 'spec/**/*.rb'
 
-Metrics/LineLength:
+Layout/LineLength:
     Exclude:
         - 'spec/**/*.rb'
