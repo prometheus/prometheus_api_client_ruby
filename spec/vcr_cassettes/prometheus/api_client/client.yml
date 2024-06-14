@@ -89,4 +89,92 @@ http_interactions:
         returned HTTP status 403 Forbidden","lastScrape":"2017-08-08T09:23:29.647620005Z","health":"down"},{"discoveredLabels":{"__address__":"10.128.0.7:8443","__meta_kubernetes_endpoint_port_name":"prometheus","__meta_kubernetes_endpoint_port_protocol":"TCP","__meta_kubernetes_endpoint_ready":"true","__meta_kubernetes_endpoints_name":"prometheus","__meta_kubernetes_namespace":"kube-system","__meta_kubernetes_pod_annotation_kubernetes_io_created_by":"{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicaSet\",\"namespace\":\"kube-system\",\"name\":\"prometheus-1552260379\",\"uid\":\"dada58d9-72aa-11e7-8221-001a4a2314d7\",\"apiVersion\":\"extensions\",\"resourceVersion\":\"3185\"}}\n","__meta_kubernetes_pod_annotation_openshift_io_scc":"restricted","__meta_kubernetes_pod_container_name":"oauth-proxy","__meta_kubernetes_pod_container_port_name":"web","__meta_kubernetes_pod_container_port_number":"8443","__meta_kubernetes_pod_container_port_protocol":"TCP","__meta_kubernetes_pod_host_ip":"10.35.19.248","__meta_kubernetes_pod_ip":"10.128.0.7","__meta_kubernetes_pod_label_app":"prometheus","__meta_kubernetes_pod_label_pod_template_hash":"1552260379","__meta_kubernetes_pod_name":"prometheus-1552260379-fq410","__meta_kubernetes_pod_node_name":"example.com","__meta_kubernetes_pod_ready":"true","__meta_kubernetes_service_annotation_openshift_io_generated_by":"OpenShiftNewApp","__meta_kubernetes_service_annotation_prometheus_io_scheme":"https","__meta_kubernetes_service_annotation_prometheus_io_scrape":"true","__meta_kubernetes_service_annotation_service_alpha_openshift_io_serving_cert_secret_name":"prometheus-tls","__meta_kubernetes_service_annotation_service_alpha_openshift_io_serving_cert_signed_by":"openshift-service-serving-signer@1501138614","__meta_kubernetes_service_label_name":"prometheus","__meta_kubernetes_service_name":"prometheus","__metrics_path__":"/metrics","__scheme__":"http","job":"kubernetes-service-endpoints"},"labels":{"instance":"10.128.0.7:8443","job":"kubernetes-service-endpoints","kubernetes_name":"prometheus","kubernetes_namespace":"kube-system","name":"prometheus"},"scrapeUrl":"https://10.128.0.7:8443/metrics","lastError":"","lastScrape":"2017-08-08T09:23:35.197491923Z","health":"up"}]}}'
     http_version: 
   recorded_at: Tue, 08 Aug 2017 09:24:01 GMT
+- request:
+    method: get
+    uri: https://prometheus.example.com/api/v1/query_range?end=2015-07-01T20:11:00.781Z&query=up&start=2015-07-01T20:10:30.781Z&step=15s
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer toSecret
+      User-Agent:
+      - Faraday v0.12.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, Origin
+      Access-Control-Allow-Methods:
+      - GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Date
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Aug 2017 09:24:01 GMT
+      Transfer-Encoding:
+      - chunked
+      Set-Cookie:
+      - bd337c9bdedd23361d6a22bfc4876b73=44e5e3f1c41ffda8509c6f9fbf8b9402; path=/;
+        HttpOnly; Secure
+      Cache-Control:
+      - private
+    body:
+      encoding: UTF-8
+      string: '{"status":"success","data":{"resultType":"matrix","result":[],"explanation":null}}'
+    http_version:
+  recorded_at: Tue, 08 Aug 2017 09:24:01 GMT
+- request:
+    method: get
+    uri: https://prometheus.example.com/api/v1/query_ranage?query=(not%20a%20valid%20command
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - Bearer toSecret
+      User-Agent:
+      - Faraday v0.12.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Headers:
+      - Accept, Authorization, Content-Type, Origin
+      Access-Control-Allow-Methods:
+      - GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - Date
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 08 Aug 2017 09:24:01 GMT
+      Transfer-Encoding:
+      - chunked
+      Set-Cookie:
+      - bd337c9bdedd23361d6a22bfc4876b73=44e5e3f1c41ffda8509c6f9fbf8b9402; path=/;
+        HttpOnly; Secure
+      Cache-Control:
+      - private
+    body:
+      encoding: UTF-8
+      string: '{"status": "error", "error": "1:6: parse error: unexpected identifier \"a\""}'
+    http_version:
+  recorded_at: Tue, 08 Aug 2017 09:24:01 GMT
 recorded_with: VCR 3.0.3
