@@ -104,7 +104,10 @@ module Prometheus
       def run_command(command, options)
         response = get(command, options)
 
-        JSON.parse(response.body)['data']
+        body = JSON.parse(response.body)
+        raise RequestError, body['error'] if body['status'] != 'success'
+
+        body['data']
       rescue StandardError => err
         raise RequestError, err.message
       end
