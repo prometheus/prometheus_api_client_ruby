@@ -1,7 +1,6 @@
 # Prometheus API Ruby Client
 
 [![Gem Version][1]](http://badge.fury.io/rb/prometheus-api-client)
-[![Build Status][2]](http://travis-ci.org/prometheus/prometheus_api_client_ruby)
 [![Build Status][3]](https://codeclimate.com/github/prometheus/prometheus_api_client_ruby)
 [![Coverage Status][4]](https://coveralls.io/github/prometheus/prometheus_api_client_ruby?branch=master)
 
