@@ -60,7 +60,7 @@ prometheus.get(
 ```
 # response from server is a low level response struct including
 # fields like: method, body and request_headers
-# usually users will not need to use this law level calls
+# usually users will not need to use this low level calls
    ...
    method=:get,
    body="{\"status\":\"success\",
